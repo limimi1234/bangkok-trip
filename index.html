@@ -159,16 +159,17 @@ s.money=(s.money||[]).map(m=>Array.isArray(m)?{name:m[0],amount:Number(m[1])||0,
 
 const $=x=>document.getElementById(x),save=()=>localStorage.setItem("bkk26",JSON.stringify(s));
 function show(id,b){document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));$(id).classList.add("on");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("on"));b.classList.add("on");if(id==="spots")renderSpots();if(id==="plan")renderPlan();if(id==="money")renderMoney();if(id==="check")renderCheck()}
-function dist(a,b){return Math.max(.5,Math.abs(a.length-b.length)*.7+1.2).toFixed(1)}
+function directions(origin,destination){location.href='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(origin)+'&destination='+encodeURIComponent(destination)}
 function dayHtml(di){
  let d=s.days[di],x='<div class="card"><div class="dayrow"><div class="day">'+d.d+' · '+d.t+'</div><button class="addbtn" onclick="addPlan('+di+')">+ 일정 추가</button></div>';
  d.i.forEach((it,i)=>{
-   if(i)x+='<div class="route">약 '+dist(d.i[i-1][1],it[1])+'km · Google Maps에서 실제 길찾기 확인</div>';
+   if(i)x+='<div class="route"><button class="routebtn" onclick="route('+di+','+i+')">🧭 '+d.i[i-1][1]+' → '+it[1]+' · 실제 길찾기</button></div>';
    x+='<div class="item"><div class="time">'+it[0]+'</div><div><div class="place">'+it[1]+'</div><div class="note">'+it[2]+'</div></div><div class="actions"><button onclick="map('+di+','+i+')">지도</button><button onclick="editPlan('+di+','+i+')">수정</button><button onclick="mv('+di+','+i+',-1)">↑</button><button onclick="mv('+di+','+i+',1)">↓</button><button onclick="delPlan('+di+','+i+')">삭제</button></div></div>';
  });
  return x+'</div>'
 }
-function renderToday(){$("todayBox").innerHTML=dayHtml(+$("picker").value)}
+function route(d,i){if(i>0)directions(s.days[d].i[i-1][1],s.days[d].i[i][1])}
+function renderToday(){let di=+$("picker").value;$("todayBox").innerHTML=dayHtml(di);$("todayHint").textContent=s.days[di].d+" · "+s.days[di].t;renderCritical()}
 function renderPlan(){$("planBox").innerHTML=s.days.map((_,i)=>dayHtml(i)).join("")}
 function refresh(){renderToday();renderPlan()}
 function mv(d,i,n){let a=s.days[d].i,j=i+n;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];save();refresh()}

@@ -159,5 +159,5 @@ function saveMemo(){s.memo=$("memo").value;save()}
 function saveImportant(){s.important=$("important").value;save()}
 function quickMap(q){location.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)}
 function setDday(){const trip=new Date("2026-10-08T00:00:00+09:00"),now=new Date(),d=Math.ceil((trip-now)/(1000*60*60*24));$("dday").textContent=d>0?"✈️ D-"+d:d===0?"✈️ 출발 D-DAY":"✈️ 여행 중/완료"}
-$("picker").innerHTML=s.days.map((d,i)=>'<option value="'+i+'">'+d.d+'</option>').join("");$("memo").value=s.memo;renderToday();renderMoney();renderCheck();
+$("picker").innerHTML=s.days.map((d,i)=>'<option value="'+i+'">'+d.d+'</option>').join("");$("memo").value=s.memo;$("important").value=s.important||"";setDday();renderToday();renderMoney();renderCheck();save();
 </script></body></html>

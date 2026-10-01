@@ -86,6 +86,46 @@ const foodSpots=[
 {name:"After You Dessert Cafe",cat:"디저트",area:"시암·쇼핑몰",note:"쇼핑 중 쉬어가기 좋은 태국 디저트 체인",menu:"시부야 허니토스트 · 카키고리",source:"https://www.google.com/maps/search/?api=1&query=After+You+Dessert+Cafe+Bangkok"}
 ];
 foodSpots.forEach((x,i)=>{const old=s.spots.find(y=>y.name===x.name);if(old)Object.assign(old,x);else s.spots.push({id:"food"+i,...x})});
+const savedMapSpots=[
+{name:"Deluxe massage Therapy (BTS Phayathai Exit 2)",cat:"마사지",area:"파야타이",note:"Google Maps 저장 · ★4.8 (912) · 마사지 스파 · Thai & Oil massage",menu:"타이 마사지 · 오일 마사지"},
+{name:"릉루엉",cat:"맛집",area:"프롬퐁",note:"Google Maps 저장 · ★4.4 (9,403) · ฿1~200 · 국수 전문점",menu:"똠얌비빔 · 오렌지주스"},
+{name:"바미 콘새리",cat:"맛집",area:"미분류",note:"Google Maps 저장 · ★4.4 (2,630) · ฿1~200 · 국수 전문점",menu:"볶음밥"},
+{name:"After You Dessert Café",cat:"디저트",area:"미분류",note:"Google Maps 저장 · ★4.4 (1,348) · ฿200~400 · 디저트",menu:"망빙 · 타이티"},
+{name:"레 라오",cat:"맛집",area:"아리",note:"Google Maps 저장 · ★4.5 (963) · ฿400~600 · 태국 요리",menu:"총알오징어 · 소고기볶음밥"},
+{name:"짜런쌩 씰롬",cat:"맛집",area:"실롬·사톤",note:"Google Maps 저장 · ★4.4 (4,628) · ฿1~200 · 태국 요리",menu:"족발"},
+{name:"까이텃 쩨끼 (폴로 닭튀김)",cat:"맛집",area:"실롬·룸피니",note:"Google Maps 저장 · ★4.3 (3,844) · ฿200~400 · 태국 요리 · 메모: 맥주 온도 미쳤음",menu:"옥수수솜땀 무조건 · 닭튀김 · 맥주"},
+{name:"Pad Thai House",cat:"맛집",area:"미분류",note:"Google Maps 저장 · ★4.7 (258) · ฿1~200 · 음식점",menu:"새우팟타이"},
+{name:"샴발라 쏨땀",cat:"맛집",area:"미분류",note:"Google Maps 저장 · ★4.4 (595) · ฿200~400 · 태국 요리",menu:"얌운센"},
+{name:"Cream",cat:"맛집",area:"미분류",note:"Google Maps 저장 · ★4.5 (414) · ฿200~400 · 태국 요리"},
+{name:"조조 팟타이",cat:"맛집",area:"미분류",note:"Google Maps 저장 · ★3.6 (642) · ฿1~200 · 음식점"},
+{name:"티추까 루프탑바",cat:"바/야경",area:"통로·에까마이",note:"Google Maps 저장 · ★4.2 (7,142) · ฿400~600 · 칵테일바",menu:"아바타나무 야경 포인트"},
+{name:"텅 스미스 센트럴월드점",cat:"맛집",area:"시암·칠롬",note:"Google Maps 저장 · ★4.5 (1,752) · ฿200~400 · 국수 전문점"},
+{name:"매텀팟타이",cat:"맛집",area:"미분류",note:"Google Maps 저장 · ★4.9 (1,717) · ฿1~200 · 태국 요리"},
+{name:"타이거 마사지 애플",cat:"마사지",area:"미분류",note:"Google Maps 저장 · ★4.5 (736) · 타이 마사지 치료사"},
+{name:"Ruam Sab Market",cat:"시장/먹거리",area:"아속",note:"Google Maps 저장 · ★4.3 (2,431) · ฿1~200 · 푸드 코트"},
+{name:"Auntie Mhoo’s Juice & Smoothies",cat:"카페",area:"미분류",note:"Google Maps 저장 · ★4.9 (271) · ฿1~200 · 주스",menu:"주스 · 스무디"},
+{name:"Oh! Juice Siam Square One",cat:"카페",area:"시암·칠롬",note:"Google Maps 저장 · ★4.2 (171) · 음료"},
+{name:"Ros'niyom Central World",cat:"맛집",area:"시암·칠롬",note:"Google Maps 저장 · ★3.9 (396) · ฿200~400 · 태국 요리"},
+{name:"The Shed Bangkok",cat:"맛집",area:"미분류",note:"Google Maps 저장 · ★4.6 (482) · 음식점"},
+{name:"란 쩨오 쭐라",cat:"맛집",area:"삼얀·반탓통",note:"Google Maps 저장 · ★4.1 (8,755) · ฿200~400 · 태국 요리"},
+{name:"Healthy Massage Sukhumvit 19 Asok",cat:"마사지",area:"아속",note:"Google Maps 저장 · ★4.8 (4,989) · 마사지 스파 · 메모: 맛사지"},
+{name:"아이콘시암",cat:"쇼핑",area:"짜오프라야 강변",note:"Google Maps 저장 · ★4.7 (60,250) · 쇼핑몰"},
+{name:"촘아룬",cat:"맛집",area:"왕궁·올드타운",note:"Google Maps 저장 · ★4.5 (1,847) · ฿400~600 · 태국 요리 · 왓아룬 뷰"},
+{name:"그랜드 센터 포인트 호텔 터미널 21",cat:"숙소",area:"아속",note:"우리 숙소 · Google Maps 저장 · ★4.5 (4,243) · 5성급 호텔"}
+];
+const savedAliases={
+"After You Dessert Café":["After You Dessert Cafe"],
+"까이텃 쩨끼 (폴로 닭튀김)":["Polo Fried Chicken"],
+"아이콘시암":["ICONSIAM"],
+"그랜드 센터 포인트 호텔 터미널 21":["Grande Centre Point Terminal 21"]
+};
+savedMapSpots.forEach((x,i)=>{
+ const aliases=[x.name,...(savedAliases[x.name]||[])];
+ let old=s.spots.find(y=>aliases.includes(y.name));
+ x.source='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(x.name+' Bangkok');
+ if(old)Object.assign(old,x);else s.spots.push({id:"saved"+i,...x});
+});
+
 const packDefaults=[
 ["여권","여권·예약"],["여권 사본/사진","여권·예약"],["항공권 예약내역","여권·예약"],["호텔 예약내역","여권·예약"],["여행자보험 증서","여권·예약"],
 ["해외결제 카드","돈·통신"],["바트 현금","돈·통신"],["비상용 카드","돈·통신"],["eSIM/로밍","돈·통신"],["Grab 앱/결제수단 확인","돈·통신"],

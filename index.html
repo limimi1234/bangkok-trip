@@ -10,9 +10,11 @@ header{position:sticky;top:0;z-index:5;background:rgba(247,245,240,.96);backdrop
 h1{font-size:20px;margin:0 0 4px}.sub{font-size:12px;color:var(--muted)}
 main{padding:12px}.view{display:none}.view.on{display:block}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px}
 h2{font-size:17px;margin:0 0 10px}.day{font-weight:900;font-size:17px}.meta{font-size:12px;color:var(--muted);margin-top:3px}
+.dayrow{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
 .item{padding:11px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:54px 1fr;gap:8px}.item:first-child{border-top:0}
 .time{font-size:12px;font-weight:800;color:#4e6d58}.place{font-weight:900}.note{font-size:12px;color:var(--muted);margin-top:3px}
-.actions{grid-column:2;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px}.actions button,.btn{border:0;border-radius:11px;min-height:40px;font-weight:800;background:#f3f3f3}
+.actions{grid-column:2;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:6px}.actions button,.btn{border:0;border-radius:11px;min-height:40px;font-weight:800;background:#f3f3f3;font-size:12px}
+.addbtn{border:0;border-radius:10px;padding:8px 10px;background:#fff3ed;color:#b95029;font-weight:900}
 .route{margin:4px 0 4px 54px;padding:8px 10px;border-left:3px solid #d4cfc6;background:#fafafa;border-radius:0 10px 10px 0;font-size:11px;color:#555}
 input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:white;font:inherit}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .money{padding:10px 0;border-bottom:1px solid var(--line)}.row{display:flex;justify-content:space-between;gap:8px}.amt{font-weight:900}
@@ -43,10 +45,39 @@ let s=JSON.parse(localStorage.getItem("bkk26")||"null")||{days:base,money:[["항
 const $=x=>document.getElementById(x),save=()=>localStorage.setItem("bkk26",JSON.stringify(s));
 function show(id,b){document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));$(id).classList.add("on");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("on"));b.classList.add("on");if(id==="plan")renderPlan();if(id==="money")renderMoney();if(id==="check")renderCheck()}
 function dist(a,b){return Math.max(.5,Math.abs(a.length-b.length)*.7+1.2).toFixed(1)}
-function dayHtml(di){let d=s.days[di],x='<div class="card"><div class="day">'+d.d+' · '+d.t+'</div>';d.i.forEach((it,i)=>{if(i)x+='<div class="route">약 '+dist(d.i[i-1][1],it[1])+'km · Google Maps에서 실제 길찾기 확인</div>';x+='<div class="item"><div class="time">'+it[0]+'</div><div><div class="place">'+it[1]+'</div><div class="note">'+it[2]+'</div></div><div class="actions"><button onclick="map('+di+','+i+')">지도</button><button onclick="mv('+di+','+i+',-1)">↑</button><button onclick="mv('+di+','+i+',1)">↓</button></div></div>'});return x+'</div>'}
+function dayHtml(di){
+ let d=s.days[di],x='<div class="card"><div class="dayrow"><div class="day">'+d.d+' · '+d.t+'</div><button class="addbtn" onclick="addPlan('+di+')">+ 일정 추가</button></div>';
+ d.i.forEach((it,i)=>{
+   if(i)x+='<div class="route">약 '+dist(d.i[i-1][1],it[1])+'km · Google Maps에서 실제 길찾기 확인</div>';
+   x+='<div class="item"><div class="time">'+it[0]+'</div><div><div class="place">'+it[1]+'</div><div class="note">'+it[2]+'</div></div><div class="actions"><button onclick="map('+di+','+i+')">지도</button><button onclick="editPlan('+di+','+i+')">수정</button><button onclick="mv('+di+','+i+',-1)">↑</button><button onclick="mv('+di+','+i+',1)">↓</button><button onclick="delPlan('+di+','+i+')">삭제</button></div></div>';
+ });
+ return x+'</div>'
+}
 function renderToday(){$("todayBox").innerHTML=dayHtml(+$("picker").value)}
 function renderPlan(){$("planBox").innerHTML=s.days.map((_,i)=>dayHtml(i)).join("")}
-function mv(d,i,n){let a=s.days[d].i,j=i+n;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];save();renderToday();renderPlan()}
+function refresh(){renderToday();renderPlan()}
+function mv(d,i,n){let a=s.days[d].i,j=i+n;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];save();refresh()}
+function addPlan(d){
+ let time=prompt("시간 예: 14:30","12:00");if(time===null)return;
+ let place=prompt("장소");if(!place)return;
+ let note=prompt("메모","")||"";
+ s.days[d].i.push([time,place,note]);
+ save();refresh();
+}
+function editPlan(d,i){
+ let it=s.days[d].i[i];
+ let time=prompt("시간",it[0]);if(time===null)return;
+ let place=prompt("장소",it[1]);if(place===null||!place.trim())return;
+ let note=prompt("메모",it[2]);if(note===null)return;
+ s.days[d].i[i]=[time,place,note];
+ save();refresh();
+}
+function delPlan(d,i){
+ let it=s.days[d].i[i];
+ if(!confirm(it[1]+" 일정을 삭제할까?"))return;
+ s.days[d].i.splice(i,1);
+ save();refresh();
+}
 function map(d,i){location.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.days[d].i[i][1])}
 function addMoney(){let n=prompt("항목");if(!n)return;let a=Number(prompt("금액")||0);let c=prompt("통화 KRW 또는 THB","KRW")||"KRW";let w=prompt("결제자 공동/예림/나배","공동")||"공동";s.money.push([n,a,c,w]);save();renderMoney()}
 function renderMoney(){let k=0,t=0;$("moneyBox").innerHTML=s.money.map((m,i)=>{m[2]==="KRW"?k+=m[1]:t+=m[1];return '<div class="money"><div class="row"><b>'+m[0]+'</b><span class="amt">'+m[1].toLocaleString()+' '+m[2]+'</span></div><div class="small">'+m[3]+'</div></div>'}).join("");$("sum").textContent='총 '+k.toLocaleString()+'원 / ฿'+t.toLocaleString()}

@@ -173,21 +173,13 @@ function renderToday(){let di=+$("picker").value;$("todayBox").innerHTML=dayHtml
 function renderPlan(){$("planBox").innerHTML=s.days.map((_,i)=>dayHtml(i)).join("")}
 function refresh(){renderToday();renderPlan()}
 function mv(d,i,n){let a=s.days[d].i,j=i+n;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];save();refresh()}
-function addPlan(d){
- let time=prompt("시간 예: 14:30","12:00");if(time===null)return;
- let place=prompt("장소");if(!place)return;
- let note=prompt("메모","")||"";
- s.days[d].i.push([time,place,note]);
- save();refresh();
-}
-function editPlan(d,i){
- let it=s.days[d].i[i];
- let time=prompt("시간",it[0]);if(time===null)return;
- let place=prompt("장소",it[1]);if(place===null||!place.trim())return;
- let note=prompt("메모",it[2]);if(note===null)return;
- s.days[d].i[i]=[time,place,note];
- save();refresh();
-}
+let modalState={type:"",d:-1,i:-1,spot:-1};
+function escAttr(v){return String(v||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")}
+function openModal(title,html,state){modalState=state;$("modalTitle").textContent=title;$("modalBody").innerHTML=html;$("editModal").classList.add("on")}
+function closeModal(){$("editModal").classList.remove("on")}
+function addPlan(d){openPlanModal(d,-1,"","","")}
+function editPlan(d,i){let it=s.days[d].i[i];openPlanModal(d,i,it[0],it[1],it[2])}
+function openPlanModal(d,i,time,place,note){openModal(i<0?"일정 추가":"일정 수정",'<div class="field"><label>시간</label><input id="xTime" type="time" value="'+(time||"12:00")+'"></div><div class="field"><label>장소</label><input id="xPlace" value="'+escAttr(place||"")+'" placeholder="장소 이름"></div><div class="field"><label>메모</label><input id="xNote" value="'+escAttr(note||"")+'" placeholder="식사, 예약시간 등"></div>',{type:"plan",d:d,i:i,spot:-1})}
 function delPlan(d,i){
  let it=s.days[d].i[i];
  if(!confirm(it[1]+" 일정을 삭제할까?"))return;

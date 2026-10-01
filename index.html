@@ -98,6 +98,57 @@ const foodSpots=[
 {name:"After You Dessert Cafe",cat:"디저트",area:"시암·쇼핑몰",note:"쇼핑 중 쉬어가기 좋은 태국 디저트 체인",menu:"시부야 허니토스트 · 카키고리",source:"https://www.google.com/maps/search/?api=1&query=After+You+Dessert+Cafe+Bangkok"}
 ];
 foodSpots.forEach((x,i)=>{const old=s.spots.find(y=>y.name===x.name);if(old)Object.assign(old,x);else s.spots.push({id:"food"+i,...x})});
+const koNames={
+"Suvarnabhumi Airport":["수완나품 국제공항","Suvarnabhumi Airport"],
+"Grande Centre Point Terminal 21":["그란데 센터 포인트 터미널 21","Grande Centre Point Terminal 21 Bangkok"],
+"The Grand Palace Bangkok":["방콕 왕궁","The Grand Palace Bangkok"],
+"Wat Pho Bangkok":["왓 포","Wat Pho Bangkok"],
+"Wat Arun Bangkok":["왓 아룬","Wat Arun Bangkok"],
+"Talat Noi Bangkok":["탈랏노이","Talat Noi Bangkok"],
+"Song Wat Road Bangkok":["송왓 로드","Song Wat Road Bangkok"],
+"Yaowarat Road Bangkok":["야오와랏 로드","Yaowarat Road Bangkok"],
+"Banthat Thong Road Bangkok":["반탓통 로드","Banthat Thong Road Bangkok"],
+"Samyan Mitrtown Hall":["삼얀 미트타운 홀","Samyan Mitrtown Hall Bangkok"],
+"Ari Bangkok":["아리","Ari Bangkok"],
+"Thong Lo Bangkok":["통로","Thong Lo Bangkok"],
+"Ekkamai Bangkok":["에까마이","Ekkamai Bangkok"],
+"Pattaya Beach":["파타야 비치","Pattaya Beach Thailand"],
+"Na Jomtien Pattaya":["나좀티엔","Na Jomtien Pattaya"],
+"CentralWorld Bangkok":["센트럴월드","CentralWorld Bangkok"],
+"Asok Bangkok":["아속","Asok Bangkok"],
+"ICONSIAM":["아이콘시암","ICONSIAM Bangkok"],
+"Siam Paragon Bangkok":["시암 파라곤","Siam Paragon Bangkok"],
+"EMSPHERE Bangkok":["엠스피어","EMSPHERE Bangkok"],
+"Chatuchak Weekend Market":["짜뚜짝 주말시장","Chatuchak Weekend Market Bangkok"],
+"JODD FAIRS Bangkok":["조드페어 야시장","JODD FAIRS Bangkok"],
+"King Power Mahanakhon SkyWalk":["킹파워 마하나콘 스카이워크","King Power Mahanakhon SkyWalk"],
+"Chao Phraya River Cruise Bangkok":["짜오프라야강 디너크루즈","Chao Phraya River Cruise Bangkok"],
+"Asiatique The Riverfront":["아시아티크 더 리버프론트","Asiatique The Riverfront Bangkok"],
+"Wat Paknam Phasi Charoen":["왓 빡남 파시짜런","Wat Paknam Phasi Charoen Bangkok"],
+"Health Land Asoke":["헬스랜드 아속","Health Land Asoke Bangkok"],
+"Grande Centre Point Terminal 21 Pool":["터미널21 호텔 수영장","Grande Centre Point Terminal 21 Bangkok"],
+"Jay Fai":["쩨파이","Jay Fai Bangkok"],
+"Krua Apsorn (Dusit)":["크루아 압손 (두싯)","Krua Apsorn Dusit Bangkok"],
+"K. Panich":["코 파닛","K Panich Bangkok"],
+"Urai Braised Goose":["우라이 거위조림","Urai Braised Goose Bangkok"],
+"Ku Long Bao":["쿠 롱 바오","Ku Long Bao Song Wat Bangkok"],
+"Potong":["포통","Potong Bangkok"],
+"Nai Ek Roll Noodles":["나이엑 롤 누들","Nai Ek Roll Noodles Bangkok"],
+"Polo Fried Chicken":["폴로 프라이드 치킨","Polo Fried Chicken Bangkok"],
+"Pad Thai Fai Ta Lu":["팟타이 파이 탈루","Pad Thai Fai Ta Lu Bangkok"],
+"Somsak Pu Ob":["솜삭 푸옵","Somsak Pu Ob Bangkok"],
+"Factory Coffee":["팩토리 커피","Factory Coffee Bangkok"],
+"Mother Roaster Talat Noi":["마더 로스터 탈랏노이","Mother Roaster Talat Noi Bangkok"],
+"Hong Sieng Kong":["홍시엥콩","Hong Sieng Kong Bangkok"],
+"After You Dessert Cafe":["애프터유 디저트 카페","After You Dessert Cafe Bangkok"]
+};
+const mapAliases={};
+Object.entries(koNames).forEach(([en,v])=>{mapAliases[en]=v[1];mapAliases[v[0]]=v[1]});
+function koreanizePlace(name){return koNames[name]?koNames[name][0]:name}
+function geoQuery(name){return mapAliases[name]||name}
+s.spots.forEach(x=>{if(koNames[x.name]){x.mapName=koNames[x.name][1];x.name=koNames[x.name][0]}else if(!x.mapName)x.mapName=x.name});
+s.days.forEach(d=>d.i.forEach(it=>{if(koNames[it[1]])it[1]=koNames[it[1]][0]}));
+
 const savedMapSpots=[
 {name:"Deluxe massage Therapy (BTS Phayathai Exit 2)",cat:"마사지",area:"파야타이",note:"Google Maps 저장 · ★4.8 (912) · 마사지 스파 · Thai & Oil massage",menu:"타이 마사지 · 오일 마사지"},
 {name:"릉루엉",cat:"맛집",area:"프롬퐁",note:"Google Maps 저장 · ★4.4 (9,403) · ฿1~200 · 국수 전문점",menu:"똠얌비빔 · 오렌지주스"},
@@ -159,7 +210,7 @@ s.money=(s.money||[]).map(m=>Array.isArray(m)?{name:m[0],amount:Number(m[1])||0,
 
 const $=x=>document.getElementById(x),save=()=>localStorage.setItem("bkk26",JSON.stringify(s));
 function show(id,b){document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));$(id).classList.add("on");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("on"));b.classList.add("on");if(id==="spots")renderSpots();if(id==="plan")renderPlan();if(id==="money")renderMoney();if(id==="check")renderCheck()}
-function directions(origin,destination){location.href='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(origin)+'&destination='+encodeURIComponent(destination)}
+function directions(origin,destination){location.href='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(geoQuery(origin))+'&destination='+encodeURIComponent(geoQuery(destination))}
 function dayHtml(di){
  let d=s.days[di],x='<div class="card"><div class="dayrow"><div class="day">'+d.d+' · '+d.t+'</div><button class="addbtn" onclick="addPlan('+di+')">+ 일정 추가</button></div>';
  d.i.forEach((it,i)=>{
@@ -186,7 +237,7 @@ function delPlan(d,i){
  s.days[d].i.splice(i,1);
  save();refresh();
 }
-function map(d,i){location.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.days[d].i[i][1])}
+function map(d,i){location.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(geoQuery(s.days[d].i[i][1]))}
 function classifySpot(name){const n=name.toLowerCase();let cat="기타",area="미분류";if(/massage|spa|health land|마사지/.test(n))cat="마사지";else if(/beach|pool|water|jomtien|pattaya|수영|비치/.test(n))cat="물놀이";else if(/icon|central|siam|sphere|terminal|mall|shopping|쇼핑/.test(n))cat="쇼핑";else if(/market|fair|yaowarat|banthat|night|시장|야시장/.test(n))cat="시장/먹거리";else if(/bar|rooftop|cruise|thong|ekkamai|바|루프탑/.test(n))cat="바/야경";else if(/cafe|coffee|ari|song wat|talat noi|카페/.test(n))cat="카페/거리";else if(/wat |temple|palace|mahanakhon|asiatique|museum|park|왕궁|사원|전망/.test(n))cat="관광/명소";if(/asok|terminal 21|health land asoke/.test(n))area="아속";else if(/grand palace|wat pho|wat arun/.test(n))area="왕궁·올드타운";else if(/yaowarat|song wat|talat noi/.test(n))area="차이나타운";else if(/siam|centralworld|paragon/.test(n))area="시암·칠롬";else if(/emsphere|phrom phong/.test(n))area="프롬퐁";else if(/ari/.test(n))area="아리";else if(/thong|ekkamai/.test(n))area="통로·에까마이";else if(/chatuchak/.test(n))area="짜뚜짝";else if(/banthat|samyan/.test(n))area="삼얀·반탓통";else if(/icon|asiatique|chao phraya|cruise/.test(n))area="짜오프라야 강변";else if(/mahanakhon|silom|sathon/.test(n))area="실롬·사톤";else if(/jodd|rama 9|ratchada/.test(n))area="라마9·라차다";else if(/pattaya|jomtien/.test(n))area="파타야";return{cat,area}}
 function addSpot(){openSpotModal(-1)}
 function editSpot(i){openSpotModal(i)}
@@ -240,7 +291,7 @@ function saveModal(){
  if(st.type==="check"){let name=$("xCheckName").value.trim();if(!name)return;let obj={name:name,cat:$("xCheckCat").value.trim()||guessCat(name),owner:$("xOwner").value};if(st.i>=0)Object.assign(s.checks[st.i],obj);else{s.checks.push({...obj,done:false});$("newCheck").value=""}save();closeModal();renderCheck();return}
 }
 function spotFit(x){let a=x.area||"";if(/왕궁|올드타운|차이나타운|송왓|탈랏노이/.test(a))return"🗓 10/9 동선과 잘 맞음";if(/삼얀|반탓통/.test(a))return"🗓 10/10 콘서트 날 후보";if(/아리|통로|에까마이/.test(a))return"🗓 10/11 동선과 잘 맞음";if(/파타야/.test(a))return"🗓 10/12 파타야 날 후보";if(/시암|칠롬|아속|프롬퐁/.test(a))return"🗓 10/13 또는 빈 시간 후보";return"🗓 일정에 추가해서 동선 조정 가능"}
-function goHotel(){location.href='https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent("Grande Centre Point Terminal 21")}
+function goHotel(){location.href='https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent("Grande Centre Point Terminal 21 Bangkok")}
 function renderCritical(){const names=["여권","항공권 예약내역","호텔 예약내역","Young K 티켓/예매내역","eSIM/로밍","해외결제 카드"];let h='<div class="small" style="margin-top:12px"><b>출발 전 핵심</b></div><div class="critical">';names.forEach(n=>{let x=s.checks.find(v=>v.name===n||v.name.includes(n));h+='<span class="'+(x&&x.done?"ok":"")+'">'+(x&&x.done?"✓ ":"○ ")+n+'</span>'});$("criticalBox").innerHTML=h+"</div>"}
 function exportData(){let blob=new Blob([JSON.stringify(s,null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="bangkok-trip-backup-2026.json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 function importData(input){let file=input.files&&input.files[0];if(!file)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.days||!x.money||!x.checks)throw new Error("bad");if(!confirm("현재 데이터를 백업 파일 내용으로 바꿀까?"))return;s=x;save();location.reload()}catch(e){alert("방콕 플래너 백업 파일을 읽지 못했어.")}};r.readAsText(file);input.value=""}

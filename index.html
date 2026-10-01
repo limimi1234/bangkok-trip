@@ -17,21 +17,21 @@ h2{font-size:17px;margin:0 0 10px}.day{font-weight:900;font-size:17px}.meta{font
 .addbtn{border:0;border-radius:10px;padding:8px 10px;background:#fff3ed;color:#b95029;font-weight:900}
 .route{margin:4px 0 4px 54px;padding:8px 10px;border-left:3px solid #d4cfc6;background:#fafafa;border-radius:0 10px 10px 0;font-size:11px;color:#555}
 input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:white;font:inherit}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.money{padding:10px 0;border-bottom:1px solid var(--line)}.row{display:flex;justify-content:space-between;gap:8px}.amt{font-weight:900}
-.bottom{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:7px 5px calc(7px + env(safe-area-inset-bottom))}
+.money{padding:10px 0;border-bottom:1px solid var(--line)}.row{display:flex;justify-content:space-between;gap:8px}.amt{font-weight:900}.spot{padding:12px 0;border-bottom:1px solid var(--line)}.spot:last-child{border-bottom:0}.spotname{font-weight:900;font-size:14px}.tags{display:flex;gap:5px;flex-wrap:wrap;margin:5px 0}.tag{font-size:10px;padding:4px 7px;border-radius:999px;background:#f2f2f2;color:#555}.spotactions{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:7px}.spotactions button{border:0;border-radius:10px;min-height:38px;background:#f5f5f5;font-weight:800;font-size:11px}.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.bottom{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr);padding:7px 4px calc(7px + env(safe-area-inset-bottom))}
 .bottom button{border:0;background:transparent;min-height:52px;font-size:10px;font-weight:800;color:#777}.bottom button.on{color:#111;background:#f2f2f2;border-radius:12px}.bottom span{display:block;font-size:19px}
 .small{font-size:11px;color:var(--muted);line-height:1.5}.pill{display:inline-block;padding:6px 9px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:11px;margin:8px 4px 0 0}
 </style></head><body>
 <header><h1>🇹🇭 예림 × 나배 · Bangkok 2026</h1><div class="sub">10/8–10/13 · 2명 · Grande Centre Point Terminal 21</div><span class="pill">🎤 10/10 Young K</span><span class="pill">🌊 10/12 Pattaya</span></header>
 <main>
 <section id="today" class="view on"><div class="card"><h2>오늘 / 선택한 날</h2><select id="picker" onchange="renderToday()"></select></div><div id="todayBox"></div></section>
-<section id="plan" class="view"><div id="planBox"></div></section>
+<section id="spots" class="view"><div class="card"><div class="row"><div><h2>📍 가면 좋을 곳</h2><div class="small">한국 여행자들이 많이 찾는 곳 + 요즘 인기 지역 위주</div></div><button class="btn" onclick="addSpot()">+ 추가</button></div></div><div class="card"><div class="filters"><select id="catFilter" onchange="renderSpots()"></select><select id="areaFilter" onchange="renderSpots()"></select></div><div id="spotsBox"></div></div></section><section id="plan" class="view"><div id="planBox"></div></section>
 <section id="money" class="view"><div class="card"><div class="row"><h2>경비</h2><button class="btn" onclick="addMoney()">+ 추가</button></div><div id="sum" class="small"></div></div><div class="card" id="moneyBox"></div></section>
 <section id="check" class="view"><div class="card"><h2>준비물</h2><div id="checkBox"></div><div class="grid2" style="margin-top:8px"><input id="newCheck" placeholder="추가"><button class="btn" onclick="addCheck()">추가</button></div></div></section>
 <section id="more" class="view"><div class="card"><h2>메모</h2><textarea id="memo" rows="6" placeholder="예림·나배 메모" oninput="saveMemo()"></textarea></div><div class="card small"><b>아이폰 홈 화면 추가</b><br>Safari → 공유 버튼 → 홈 화면에 추가</div></section>
 </main>
 <nav class="bottom">
-<button class="on" onclick="show('today',this)"><span>☀️</span>오늘</button><button onclick="show('plan',this)"><span>🗓</span>일정</button><button onclick="show('money',this)"><span>💸</span>경비</button><button onclick="show('check',this)"><span>✅</span>준비</button><button onclick="show('more',this)"><span>⋯</span>더보기</button>
+<button class="on" onclick="show('today',this)"><span>☀️</span>오늘</button><button onclick="show('spots',this)"><span>📍</span>가면좋을곳</button><button onclick="show('plan',this)"><span>🗓</span>일정</button><button onclick="show('money',this)"><span>💸</span>경비</button><button onclick="show('check',this)"><span>✅</span>준비</button><button onclick="show('more',this)"><span>⋯</span>더보기</button>
 </nav>
 <script>
 const base=[
@@ -41,9 +41,36 @@ const base=[
 {d:"10/11 일",t:"요즘 방콕",i:[["10:30","Ari Bangkok","브런치·카페"],["14:00","Grande Centre Point Terminal 21","호텔 수영"],["18:00","Thong Lo Bangkok","저녁 + 바"],["21:30","Ekkamai Bangkok","2차"]]},
 {d:"10/12 월",t:"파타야 당일치기",i:[["07:00","Grande Centre Point Terminal 21","출발"],["09:30","Pattaya Beach","도착"],["11:00","Na Jomtien Pattaya","비치클럽 / 물놀이"],["16:30","Pattaya Beach","선셋"],["18:30","Grande Centre Point Terminal 21","방콕 복귀"]]},
 {d:"10/13 화",t:"마지막 날",i:[["09:00","Grande Centre Point Terminal 21","호텔 수영"],["12:00","Grande Centre Point Terminal 21","체크아웃"],["13:00","CentralWorld Bangkok","쇼핑"],["15:30","Asok Bangkok","마사지"],["19:00","Suvarnabhumi Airport","22:45 출발"]]}];
+const defaultSpots=[
+["ICONSIAM","쇼핑","짜오프라야 강변","쑥시암·쇼핑·야경"],
+["CentralWorld Bangkok","쇼핑","시암·칠롬","대형 쇼핑몰·맛집"],
+["Siam Paragon Bangkok","쇼핑","시암·칠롬","쇼핑·푸드코트"],
+["EMSPHERE Bangkok","쇼핑","프롬퐁","신상 쇼핑몰·맛집"],
+["Chatuchak Weekend Market","시장/먹거리","짜뚜짝","주말 쇼핑·먹거리"],
+["Banthat Thong Road Bangkok","시장/먹거리","삼얀·반탓통","요즘 인기 먹거리 거리"],
+["Yaowarat Road Bangkok","시장/먹거리","차이나타운","야식·길거리 음식"],
+["JODD FAIRS Bangkok","시장/먹거리","라마9·라차다","야시장"],
+["Song Wat Road Bangkok","카페/거리","차이나타운","카페·숍·사진"],
+["Talat Noi Bangkok","카페/거리","차이나타운","골목·사진·카페"],
+["Ari Bangkok","카페/거리","아리","브런치·카페"],
+["Thong Lo Bangkok","바/야경","통로·에까마이","저녁·바"],
+["Ekkamai Bangkok","바/야경","통로·에까마이","카페·바"],
+["King Power Mahanakhon SkyWalk","바/야경","실롬·사톤","전망대·야경"],
+["Chao Phraya River Cruise Bangkok","바/야경","짜오프라야 강변","디너크루즈"],
+["Asiatique The Riverfront","관광/명소","짜오프라야 강변","리버프론트·야경"],
+["The Grand Palace Bangkok","관광/명소","왕궁·올드타운","첫 방콕 필수"],
+["Wat Pho Bangkok","관광/명소","왕궁·올드타운","와불상·사원"],
+["Wat Arun Bangkok","관광/명소","왕궁·올드타운","강변 대표 사원"],
+["Wat Paknam Phasi Charoen","관광/명소","톤부리","대불상"],
+["Health Land Asoke","마사지","아속","마사지 후보"],
+["Grande Centre Point Terminal 21 Pool","물놀이","아속","호텔 수영"],
+["Na Jomtien Pattaya","물놀이","파타야","비치클럽·물놀이"],
+["Pattaya Beach","물놀이","파타야","해변·선셋"]
+].map((x,i)=>({id:"seed"+i,name:x[0],cat:x[1],area:x[2],note:x[3]}));
 let s=JSON.parse(localStorage.getItem("bkk26")||"null")||{days:base,money:[["항공권",846600,"KRW","공동"],["숙박",993390,"KRW","공동"],["Young K 티켓",7888,"THB","공동"]],checks:["여권","항공권","호텔 예약","Young K 티켓","여행자보험","eSIM/로밍","보조배터리","우산/우비","수영복","방수팩","바트 현금","해외결제 카드"].map(x=>[x,false]),memo:""};
+if(!s.spots)s.spots=defaultSpots;
 const $=x=>document.getElementById(x),save=()=>localStorage.setItem("bkk26",JSON.stringify(s));
-function show(id,b){document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));$(id).classList.add("on");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("on"));b.classList.add("on");if(id==="plan")renderPlan();if(id==="money")renderMoney();if(id==="check")renderCheck()}
+function show(id,b){document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));$(id).classList.add("on");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("on"));b.classList.add("on");if(id==="spots")renderSpots();if(id==="plan")renderPlan();if(id==="money")renderMoney();if(id==="check")renderCheck()}
 function dist(a,b){return Math.max(.5,Math.abs(a.length-b.length)*.7+1.2).toFixed(1)}
 function dayHtml(di){
  let d=s.days[di],x='<div class="card"><div class="dayrow"><div class="day">'+d.d+' · '+d.t+'</div><button class="addbtn" onclick="addPlan('+di+')">+ 일정 추가</button></div>';
@@ -79,6 +106,12 @@ function delPlan(d,i){
  save();refresh();
 }
 function map(d,i){location.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.days[d].i[i][1])}
+function classifySpot(name){const n=name.toLowerCase();let cat="기타",area="미분류";if(/massage|spa|health land|마사지/.test(n))cat="마사지";else if(/beach|pool|water|jomtien|pattaya|수영|비치/.test(n))cat="물놀이";else if(/icon|central|siam|sphere|terminal|mall|shopping|쇼핑/.test(n))cat="쇼핑";else if(/market|fair|yaowarat|banthat|night|시장|야시장/.test(n))cat="시장/먹거리";else if(/bar|rooftop|cruise|thong|ekkamai|바|루프탑/.test(n))cat="바/야경";else if(/cafe|coffee|ari|song wat|talat noi|카페/.test(n))cat="카페/거리";else if(/wat |temple|palace|mahanakhon|asiatique|museum|park|왕궁|사원|전망/.test(n))cat="관광/명소";if(/asok|terminal 21|health land asoke/.test(n))area="아속";else if(/grand palace|wat pho|wat arun/.test(n))area="왕궁·올드타운";else if(/yaowarat|song wat|talat noi/.test(n))area="차이나타운";else if(/siam|centralworld|paragon/.test(n))area="시암·칠롬";else if(/emsphere|phrom phong/.test(n))area="프롬퐁";else if(/ari/.test(n))area="아리";else if(/thong|ekkamai/.test(n))area="통로·에까마이";else if(/chatuchak/.test(n))area="짜뚜짝";else if(/banthat|samyan/.test(n))area="삼얀·반탓통";else if(/icon|asiatique|chao phraya|cruise/.test(n))area="짜오프라야 강변";else if(/mahanakhon|silom|sathon/.test(n))area="실롬·사톤";else if(/jodd|rama 9|ratchada/.test(n))area="라마9·라차다";else if(/pattaya|jomtien/.test(n))area="파타야";return{cat,area}}
+function addSpot(){let name=prompt("가고 싶은 장소 이름");if(!name)return;let a=classifySpot(name),note=prompt("메모","")||"";s.spots.unshift({id:"u"+Date.now(),name,cat:a.cat,area:a.area,note});save();renderSpots()}
+function editSpot(i){let w=s.spots[i];let name=prompt("장소",w.name);if(!name)return;let a=classifySpot(name);let cat=prompt("카테고리",w.cat||a.cat);if(cat===null)return;let area=prompt("지역",w.area||a.area);if(area===null)return;let note=prompt("메모",w.note||"");if(note===null)return;Object.assign(w,{name,cat,area,note});save();renderSpots()}
+function delSpot(i){if(!confirm(s.spots[i].name+"을 목록에서 지울까?"))return;s.spots.splice(i,1);save();renderSpots()}
+function spotMap(i){location.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.spots[i].name)}
+function renderSpots(){const cv=$("catFilter").value||"전체",av=$("areaFilter").value||"전체";const cats=["전체",...new Set(s.spots.map(x=>x.cat))],areas=["전체",...new Set(s.spots.map(x=>x.area))];$("catFilter").innerHTML=cats.map(x=>'<option>'+x+'</option>').join("");$("areaFilter").innerHTML=areas.map(x=>'<option>'+x+'</option>').join("");$("catFilter").value=cats.includes(cv)?cv:"전체";$("areaFilter").value=areas.includes(av)?av:"전체";const cat=$("catFilter").value,area=$("areaFilter").value;const arr=s.spots.map((x,i)=>({...x,idx:i})).filter(x=>(cat==="전체"||x.cat===cat)&&(area==="전체"||x.area===area));$("spotsBox").innerHTML=arr.map(x=>'<div class="spot"><div class="spotname">'+x.name+'</div><div class="tags"><span class="tag">'+x.cat+'</span><span class="tag">'+x.area+'</span></div><div class="small">'+(x.note||"")+'</div><div class="spotactions"><button onclick="spotMap('+x.idx+')">🗺 지도</button><button onclick="editSpot('+x.idx+')">수정</button><button onclick="delSpot('+x.idx+')">삭제</button></div></div>').join("")}
 function addMoney(){let n=prompt("항목");if(!n)return;let a=Number(prompt("금액")||0);let c=prompt("통화 KRW 또는 THB","KRW")||"KRW";let w=prompt("결제자 공동/예림/나배","공동")||"공동";s.money.push([n,a,c,w]);save();renderMoney()}
 function renderMoney(){let k=0,t=0;$("moneyBox").innerHTML=s.money.map((m,i)=>{m[2]==="KRW"?k+=m[1]:t+=m[1];return '<div class="money"><div class="row"><b>'+m[0]+'</b><span class="amt">'+m[1].toLocaleString()+' '+m[2]+'</span></div><div class="small">'+m[3]+'</div></div>'}).join("");$("sum").textContent='총 '+k.toLocaleString()+'원 / ฿'+t.toLocaleString()}
 function renderCheck(){$("checkBox").innerHTML=s.checks.map((c,i)=>'<label style="display:block;padding:9px 0;border-bottom:1px solid #eee"><input style="width:auto" type="checkbox" '+(c[1]?'checked':'')+' onchange="s.checks['+i+'][1]=this.checked;save()"> '+c[0]+'</label>').join("")}

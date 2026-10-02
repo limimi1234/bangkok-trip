@@ -25,8 +25,8 @@ input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px
 </style></head><body>
 <header><h1>🇹🇭 예림 × 나배 · Bangkok 2026</h1><div class="sub">10/8–10/13 · 2명 · Grande Centre Point Terminal 21</div><span class="pill" id="dday">✈️ 방콕</span><span class="pill">🎤 10/10 Young K</span><span class="pill">🌊 10/12 Pattaya</span><button class="pill refreshBtn" onclick="refreshLatest()">🔄 최신 버전</button></header>
 <main>
-<section id="today" class="view on"><div class="card"><h2>오늘의 여행</h2><div class="small" id="todayHint">여행 날짜를 선택해도 돼</div><select id="picker" onchange="renderToday()" style="margin-top:8px"></select><div class="todaytools"><button onclick="goHotel()">🏨 숙소로 길찾기</button><button onclick="quickMap('Suvarnabhumi Airport')">✈️ 공항 지도</button><button onclick="weatherSearch('Bangkok')">🌦 방콕 날씨</button><button onclick="weatherSearch('Pattaya')">🌊 파타야 날씨</button></div><div id="criticalBox"></div></div><div id="todayBox"></div></section>
-<section id="spots" class="view"><div class="card"><div class="row"><div><h2>📍 가면 좋을 곳</h2><div class="small">한국 여행자들이 많이 찾는 곳 + 요즘 인기 지역 위주</div></div><button class="btn" onclick="addSpot()">+ 추가</button></div></div><div class="card"><div class="filters"><select id="catFilter" onchange="renderSpots()"></select><select id="areaFilter" onchange="renderSpots()"></select></div><label class="small" style="display:flex;align-items:center;gap:6px;margin:9px 2px"><input id="favOnly" type="checkbox" style="width:auto" onchange="renderSpots()"> ❤️ 찜한 곳만 보기</label><div id="spotsBox"></div></div></section><section id="plan" class="view"><div id="planBox"></div></section>
+<section id="today" class="view on"><div class="card"><h2>오늘의 여행</h2><div class="small" id="todayHint">여행 날짜를 선택해도 돼</div><select id="picker" onchange="renderToday()" style="margin-top:8px"></select><div class="todaytools"><button onclick="goHotel()">🏨 숙소로 길찾기</button><button onclick="quickMap('Suvarnabhumi Airport')">✈️ 공항 지도</button><button onclick="weatherSearch('Bangkok')">🌦 방콕 · AccuWeather</button><button onclick="weatherSearch('Pattaya')">🌊 파타야 · AccuWeather</button></div><div id="criticalBox"></div></div><div id="todayBox"></div></section>
+<section id="spots" class="view"><div class="card"><div class="row"><div><h2>📍 가면 좋을 곳</h2><div class="small">한국 여행자들이 많이 찾는 곳 + 요즘 인기 지역 위주</div></div><button class="btn" onclick="addSpot()">+ 추가</button></div></div><div class="card"><div class="filters"><select id="catFilter" onchange="renderSpots()"></select><select id="areaFilter" onchange="renderSpots()"></select></div><div style="display:flex;flex-wrap:wrap;gap:12px;margin:9px 2px"><label class="small" style="display:flex;align-items:center;gap:6px"><input id="favOnly" type="checkbox" style="width:auto" onchange="renderSpots()"> ❤️ 찜한 곳만</label><label class="small" style="display:flex;align-items:center;gap:6px"><input id="koreanOnly" type="checkbox" style="width:auto" onchange="renderSpots()"> 🇰🇷 한국인 후기 많은 곳만</label></div><div id="spotsBox"></div></div></section><section id="plan" class="view"><div id="planBox"></div></section>
 <section id="money" class="view">
 <div class="card"><h2>💸 경비 입력</h2><div class="expenseForm">
 <div class="field"><label>항목</label><input id="mName" placeholder="예: 저녁, Grab, 마사지"></div>
@@ -39,7 +39,7 @@ input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px
 </div></div>
 <div class="card"><h2>정산 현황</h2><div id="sum" class="small"></div><div id="settle" class="settlebox"></div><div id="catSummary" class="catSummary"></div><div class="filters" style="margin-top:10px"><select id="moneyWho" onchange="renderMoney()"><option>전체 몫</option><option>공용</option><option>예림</option><option>나배</option></select><select id="moneyCat" onchange="renderMoney()"><option>전체 카테고리</option></select></div></div>
 <div class="card" id="moneyBox"></div></section>
-<section id="check" class="view"><div class="card"><div class="row"><h2>준비물</h2><b id="packCount"></b></div><div class="progress"><i id="packBar" style="width:0%"></i></div><div class="filters"><select id="packCat" onchange="renderCheck()"></select><select id="packOwner" onchange="renderCheck()"><option>전체 담당</option><option>예림</option><option>나배</option><option>공용</option></select></div><div id="checkBox"></div><div class="grid2" style="margin-top:10px"><input id="newCheck" placeholder="준비물 직접 추가"><button class="btn" onclick="addCheck()">+ 추가</button></div></div></section>
+<section id="check" class="view"><div class="card"><div class="row"><h2>준비물</h2><b id="packCount"></b></div><div class="progress"><i id="packBar" style="width:0%"></i></div><div class="filters"><select id="packCat" onchange="renderCheck()"></select><select id="packOwner" onchange="renderCheck()"><option>전체 담당</option><option>예림</option><option>나배</option><option>공용</option></select></div><label class="small" style="display:flex;align-items:center;gap:6px;margin:9px 2px"><input id="showOptional" type="checkbox" style="width:auto" onchange="renderCheck()"> 선택 준비물도 보기</label><div id="checkBox"></div><div class="grid2" style="margin-top:10px"><input id="newCheck" placeholder="준비물 직접 추가"><button class="btn" onclick="addCheck()">+ 추가</button></div></div></section>
 <section id="more" class="view"><div class="card"><h2>바로가기</h2><div class="quick"><button onclick="quickMap(&quot;Grande Centre Point Terminal 21&quot;)">🏨 호텔</button><button onclick="quickMap(&quot;Suvarnabhumi Airport&quot;)">✈️ 공항</button><button onclick="quickMap(&quot;Samyan Mitrtown Hall&quot;)">🎤 공연장</button><button onclick="quickMap(&quot;Pattaya Beach&quot;)">🌊 파타야</button></div></div><div class="card"><h2>데이터 백업</h2><div class="small">이 휴대폰에 저장된 일정·경비·준비물·메모를 파일로 보관할 수 있어.</div><div class="backup" style="margin-top:9px"><button onclick="exportData()">⬇️ 백업 저장</button><button onclick="document.getElementById('restoreFile').click()">⬆️ 백업 불러오기</button></div><input id="restoreFile" type="file" accept="application/json,.json" style="display:none" onchange="importData(this)"></div><div class="card"><h2>중요정보 메모</h2><textarea id="important" rows="4" placeholder="예약번호, 항공편, 호텔 예약정보 등" oninput="saveImportant()"></textarea></div><div class="card"><h2>자유 메모</h2><textarea id="memo" rows="6" placeholder="예림·나배 메모" oninput="saveMemo()"></textarea></div><div class="card small"><b>아이폰 홈 화면 추가</b><br>Safari → 공유 버튼 → 홈 화면에 추가</div></section>
 <div id="editModal" class="modal" onclick="if(event.target===this)closeModal()"><div class="sheet"><h2 id="modalTitle">입력</h2><div id="modalBody"></div><div class="modalActions"><button onclick="closeModal()">취소</button><button class="primary2" onclick="saveModal()">저장</button></div></div></div></main>
 <nav class="bottom">
@@ -202,25 +202,62 @@ savedMapSpots.forEach((x,i)=>{
 });
 
 const packDefaults=[
-["여권","여권·예약"],["여권 사본/사진","여권·예약"],["항공권 예약내역","여권·예약"],["호텔 예약내역","여권·예약"],["여행자보험 증서","여권·예약"],
-["해외결제 카드","돈·통신"],["바트 현금","돈·통신"],["비상용 카드","돈·통신"],["eSIM/로밍","돈·통신"],["Grab 앱/결제수단 확인","돈·통신"],
-["휴대폰 충전기","전자기기"],["보조배터리","전자기기"],["충전 케이블","전자기기"],["멀티어댑터","전자기기"],["이어폰","전자기기"],
-["반팔/얇은 옷","의류"],["속옷·양말","의류"],["잠옷","의류"],["편한 운동화","의류"],["샌들/슬리퍼","의류"],["사원용 어깨·무릎 가리는 옷","의류"],["얇은 겉옷","의류"],
-["세면도구","세면·화장"],["화장품/클렌징","세면·화장"],["선크림","세면·화장"],["렌즈/안경용품","세면·화장"],["머리끈/빗","세면·화장"],
-["접이식 우산","우기대비"],["얇은 우비","우기대비"],["지퍼백/비닐봉투","우기대비"],["휴대용 티슈/물티슈","우기대비"],
-["수영복","수영·파타야"],["방수팩","수영·파타야"],["비치용 샌들","수영·파타야"],["여벌 속옷/옷","수영·파타야"],["선글라스/모자","수영·파타야"],
-["Young K 티켓/예매내역","콘서트"],["콘서트용 보조배터리","콘서트"],["티켓 신분확인용 신분증","콘서트"],["작은 가방","콘서트"],
-["상비약","건강·기타"],["소화제/지사제","건강·기타"],["진통제","건강·기타"],["밴드","건강·기타"],["모기기피제","건강·기타"],["마스크","건강·기타"],["목베개/기내용품","건강·기타"]
+["여권","필수",false,["여권"]],
+["항공권 예약내역","필수",false,["항공권 예약내역","항공권"]],
+["호텔 예약내역","필수",false,["호텔 예약내역","호텔 예약"]],
+["여행자보험 증서","필수",false,["여행자보험 증서","여행자보험"]],
+["해외결제 카드","필수",false,["해외결제 카드"]],
+["바트 현금","필수",false,["바트 현금"]],
+["eSIM/로밍","필수",false,["eSIM/로밍"]],
+["Young K 티켓/예매내역","필수",false,["Young K 티켓/예매내역","Young K 티켓"]],
+["충전기·케이블","전자기기",false,["휴대폰 충전기","충전 케이블"]],
+["보조배터리","전자기기",false,["보조배터리","콘서트용 보조배터리"]],
+["이어폰","전자기기",false,["이어폰"]],
+["여행 옷","의류",false,["여행 옷","반팔/얇은 옷"]],
+["속옷·양말","의류",false,["속옷·양말","여벌 속옷/옷"]],
+["잠옷","의류",false,["잠옷"]],
+["얇은 겉옷","의류",false,["얇은 겉옷"]],
+["운동화","의류",false,["운동화","편한 운동화"]],
+["샌들/슬리퍼","의류",false,["샌들/슬리퍼","비치용 샌들"]],
+["사원 입장 가능한 옷 1벌","의류",false,["사원 입장 가능한 옷 1벌","사원용 어깨·무릎 가리는 옷"]],
+["세면도구","세면·화장",false,["세면도구"]],
+["화장품·클렌징","세면·화장",false,["화장품·클렌징"]],
+["선크림","세면·화장",false,["선크림"]],
+["렌즈/안경","세면·화장",false,["렌즈/안경","렌즈/안경용품"]],
+["머리끈·빗","세면·화장",false,["머리끈·빗","머리끈/빗"]],
+["수영복","수영·우기",false,["수영복"]],
+["방수팩","수영·우기",false,["방수팩"]],
+["우산","수영·우기",false,["우산","접이식 우산","우산/우비"]],
+["지퍼백","수영·우기",false,["지퍼백","지퍼백/비닐봉투"]],
+["상비약 세트","건강",false,["상비약 세트","상비약","소화제/지사제","진통제","밴드"]],
+["모기기피제","건강",false,["모기기피제"]],
+["여권 사본/사진","선택 준비물",true,["여권 사본/사진"]],
+["비상용 카드","선택 준비물",true,["비상용 카드"]],
+["멀티어댑터","선택 준비물",true,["멀티어댑터"]],
+["얇은 우비","선택 준비물",true,["얇은 우비"]],
+["티슈/물티슈","선택 준비물",true,["티슈/물티슈","휴대용 티슈/물티슈"]],
+["선글라스/모자","선택 준비물",true,["선글라스/모자"]],
+["작은 가방","선택 준비물",true,["작은 가방"]],
+["마스크","선택 준비물",true,["마스크"]],
+["목베개/기내용품","선택 준비물",true,["목베개/기내용품"]]
 ];
-function guessCat(n){if(/여권|항공|호텔|보험/.test(n))return"여권·예약";if(/티켓|콘서트/.test(n))return"콘서트";if(/카드|현금|eSIM|로밍|Grab/.test(n))return"돈·통신";if(/충전|배터리|케이블|어댑터|이어폰/.test(n))return"전자기기";if(/수영|방수|비치|선글라스|모자/.test(n))return"수영·파타야";if(/우산|우비|지퍼백|티슈/.test(n))return"우기대비";if(/옷|속옷|양말|운동화|샌들|슬리퍼|잠옷/.test(n))return"의류";if(/세면|화장|선크림|렌즈|안경|머리/.test(n))return"세면·화장";return"건강·기타"}
-s.checks=(s.checks||[]).map(x=>Array.isArray(x)?{name:x[0],done:x[1],cat:guessCat(x[0]),owner:"공용"}:x);
-packDefaults.forEach(p=>{if(!s.checks.some(x=>x.name===p[0]))s.checks.push({name:p[0],done:false,cat:p[1],owner:"공용"})});
+const legacyPackNames=new Set(["여권","항공권","호텔 예약","Young K 티켓","여행자보험","eSIM/로밍","보조배터리","우산/우비","수영복","방수팩","바트 현금","해외결제 카드","여권 사본/사진","항공권 예약내역","호텔 예약내역","여행자보험 증서","비상용 카드","Grab 앱/결제수단 확인","휴대폰 충전기","충전 케이블","멀티어댑터","이어폰","반팔/얇은 옷","속옷·양말","잠옷","편한 운동화","샌들/슬리퍼","사원용 어깨·무릎 가리는 옷","얇은 겉옷","세면도구","화장품/클렌징","선크림","렌즈/안경용품","머리끈/빗","접이식 우산","얇은 우비","지퍼백/비닐봉투","휴대용 티슈/물티슈","비치용 샌들","여벌 속옷/옷","선글라스/모자","Young K 티켓/예매내역","콘서트용 보조배터리","티켓 신분확인용 신분증","작은 가방","상비약","소화제/지사제","진통제","밴드","모기기피제","마스크","목베개/기내용품"]);
+function guessCat(n){if(/여권|항공|호텔|보험|카드|현금|eSIM|티켓/.test(n))return"필수";if(/충전|배터리|케이블|이어폰/.test(n))return"전자기기";if(/수영|방수|우산|지퍼백/.test(n))return"수영·우기";if(/옷|속옷|양말|운동화|샌들|슬리퍼|잠옷/.test(n))return"의류";if(/세면|화장|선크림|렌즈|안경|머리/.test(n))return"세면·화장";return"건강"}
+s.checks=(s.checks||[]).map(x=>Array.isArray(x)?{name:x[0],done:!!x[1],cat:guessCat(x[0]),owner:"공용"}:x);
+if(s.packVersion!==2){
+ const oldChecks=s.checks.slice(), custom=oldChecks.filter(x=>!legacyPackNames.has(x.name));
+ const findAny=aliases=>oldChecks.filter(x=>aliases.includes(x.name));
+ const rebuilt=packDefaults.map(p=>{const hits=findAny(p[3]),done=hits.length?hits.some(x=>x.done):false,owner=(hits.find(x=>x.owner&&x.owner!=="공용")||hits[0]||{}).owner||"공용";return{name:p[0],cat:p[1],optional:p[2],done,owner}});
+ s.checks=[...rebuilt,...custom];s.packVersion=2;
+}else{
+ packDefaults.forEach(p=>{let x=s.checks.find(v=>v.name===p[0]);if(x){x.cat=p[1];x.optional=p[2]}else s.checks.push({name:p[0],cat:p[1],optional:p[2],done:false,owner:"공용"})});
+}
 if(!s.important)s.important="";
 function inferExpenseCategory(n){if(/항공|택시|grab|교통/i.test(n))return"교통";if(/숙박|호텔/i.test(n))return"숙박";if(/티켓|concert|콘서트/i.test(n))return"콘서트";if(/마사지/i.test(n))return"마사지";if(/쇼핑/i.test(n))return"쇼핑";if(/카페|커피|디저트/i.test(n))return"카페·간식";if(/식사|저녁|점심|아침|국수|팟타이/i.test(n))return"식비";return"기타"}
 s.money=(s.money||[]).map(m=>Array.isArray(m)?{name:m[0],amount:Number(m[1])||0,currency:m[2]||"KRW",payer:(m[3]==="예림"||m[3]==="나배")?m[3]:"미지정",split:m[3]==="예림"?"예림":m[3]==="나배"?"나배":"공용",category:inferExpenseCategory(m[0]),date:"",note:""}:{payer:"미지정",split:"공용",category:"기타",date:"",note:"",...m});
 
 
-const $=x=>document.getElementById(x),save=()=>localStorage.setItem("bkk26",JSON.stringify(s));
+const $=x=>document.getElementById(x),save=()=>localStorage.setItem("bkk26",JSON.stringify(s));save();
 function show(id,b){document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));$(id).classList.add("on");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("on"));b.classList.add("on");if(id==="spots")renderSpots();if(id==="plan")renderPlan();if(id==="money")renderMoney();if(id==="check")renderCheck()}
 function directions(origin,destination){location.href='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(geoQuery(origin))+'&destination='+encodeURIComponent(geoQuery(destination))}
 function dayHtml(di){
@@ -259,7 +296,7 @@ function delSpot(i){if(!confirm(s.spots[i].name+"을 목록에서 지울까?"))r
 function spotSource(i){const u=s.spots[i].source;if(u)location.href=u}
 function spotReviews(i){let x=s.spots[i],q="방콕 "+x.name+" 후기";location.href="https://search.naver.com/search.naver?where=blog&query="+encodeURIComponent(q)}
 function spotMap(i){let x=s.spots[i];location.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(x.mapName||x.name+' Bangkok Thailand')}
-function renderSpots(){const cv=$("catFilter").value||"전체",av=$("areaFilter").value||"전체";const cats=["전체",...new Set(s.spots.map(x=>x.cat))],areas=["전체",...new Set(s.spots.map(x=>x.area))];$("catFilter").innerHTML=cats.map(x=>'<option>'+x+'</option>').join("");$("areaFilter").innerHTML=areas.map(x=>'<option>'+x+'</option>').join("");$("catFilter").value=cats.includes(cv)?cv:"전체";$("areaFilter").value=areas.includes(av)?av:"전체";const cat=$("catFilter").value,area=$("areaFilter").value,fav=$("favOnly")&&$("favOnly").checked;const arr=s.spots.map((x,i)=>({...x,idx:i})).filter(x=>(cat==="전체"||x.cat===cat)&&(area==="전체"||x.area===area)&&(!fav||x.fav));$("spotsBox").innerHTML=arr.map(x=>'<div class="spot"><div class="row"><div class="spotname">'+x.name+'</div><button onclick="toggleFav('+x.idx+')" style="border:0;background:transparent;font-size:20px;padding:2px 5px">'+(x.fav?'❤️':'🤍')+'</button></div><div class="tags"><span class="tag">'+x.cat+'</span><span class="tag">'+x.area+'</span>'+(x.reviewHint?'<span class="tag">🇰🇷 '+x.reviewHint+'</span>':'')+'</div><div class="small">'+(x.note||"")+'</div>'+(x.menu?'<div class="menu"><b>🍽 여기서는</b> '+x.menu+'</div>':'')+'<div class="fit">'+spotFit(x)+'</div><div class="spotactions"><button onclick="spotMap('+x.idx+')">🗺 지도</button><button onclick="spotToPlan('+x.idx+')">➕ 일정</button>'+(x.source?'<button onclick="spotSource('+x.idx+')">🔎 정보</button>':'<button disabled>정보 -</button>')+'<button onclick="spotReviews('+x.idx+')">📝 후기</button><button onclick="editSpot('+x.idx+')">수정</button><button onclick="delSpot('+x.idx+')">삭제</button></div></div>').join("")}
+function renderSpots(){const cv=$("catFilter").value||"전체",av=$("areaFilter").value||"전체";const cats=["전체",...new Set(s.spots.map(x=>x.cat))],areas=["전체",...new Set(s.spots.map(x=>x.area))];$("catFilter").innerHTML=cats.map(x=>'<option>'+x+'</option>').join("");$("areaFilter").innerHTML=areas.map(x=>'<option>'+x+'</option>').join("");$("catFilter").value=cats.includes(cv)?cv:"전체";$("areaFilter").value=areas.includes(av)?av:"전체";const cat=$("catFilter").value,area=$("areaFilter").value,fav=$("favOnly")&&$("favOnly").checked,korean=$("koreanOnly")&&$("koreanOnly").checked;const arr=s.spots.map((x,i)=>({...x,idx:i})).filter(x=>(cat==="전체"||x.cat===cat)&&(area==="전체"||x.area===area)&&(!fav||x.fav)&&(!korean||x.reviewHint));$("spotsBox").innerHTML=arr.map(x=>'<div class="spot"><div class="row"><div class="spotname">'+x.name+'</div><button onclick="toggleFav('+x.idx+')" style="border:0;background:transparent;font-size:20px;padding:2px 5px">'+(x.fav?'❤️':'🤍')+'</button></div><div class="tags"><span class="tag">'+x.cat+'</span><span class="tag">'+x.area+'</span>'+(x.reviewHint?'<span class="tag">🇰🇷 '+x.reviewHint+'</span>':'')+'</div><div class="small">'+(x.note||"")+'</div>'+(x.menu?'<div class="menu"><b>🍽 여기서는</b> '+x.menu+'</div>':'')+'<div class="fit">'+spotFit(x)+'</div><div class="spotactions"><button onclick="spotMap('+x.idx+')">🗺 지도</button><button onclick="spotToPlan('+x.idx+')">➕ 일정</button>'+(x.source?'<button onclick="spotSource('+x.idx+')">🔎 정보</button>':'<button disabled>정보 -</button>')+'<button onclick="spotReviews('+x.idx+')">📝 후기</button><button onclick="editSpot('+x.idx+')">수정</button><button onclick="delSpot('+x.idx+')">삭제</button></div></div>').join("")}
 function toggleFav(i){s.spots[i].fav=!s.spots[i].fav;save();renderSpots()}
 function defaultExpenseDate(){let d=new Date(),ymd=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");return ymd>="2026-10-08"&&ymd<="2026-10-13"?ymd:"2026-10-08"}
 function clearExpenseForm(){$("mName").value="";$("mAmount").value="";$("mCurrency").value="THB";$("mPayer").value="예림";$("mSplit").value="공용";$("mCategory").value="식비";$("mDate").value=defaultExpenseDate();$("mNote").value="";$("mEdit").value="-1";$("mSaveBtn").textContent="경비 저장"}
@@ -291,7 +328,7 @@ function renderMoney(){
  let arr=s.money.map((m,i)=>({m,i})).filter(x=>(who==="전체 몫"||x.m.split===who)&&(cat==="전체 카테고리"||x.m.category===cat));
  $("moneyBox").innerHTML=arr.map(x=>{let m=x.m,i=x.i;return '<div class="money"><div class="row"><b>'+m.name+'</b><span class="amt">'+fmtMoney(m.amount,m.currency)+'</span></div><div class="tags"><span class="tag">'+m.category+'</span><span class="tag">'+(m.split==="공용"?"공용 반반":m.split+" 개인")+'</span><span class="tag">결제 '+m.payer+'</span></div><div class="small">'+(m.date||"날짜 미입력")+(m.note?" · "+m.note:"")+'</div><div class="miniActions"><button onclick="editMoney('+i+')">수정</button><button onclick="delMoney('+i+')">삭제</button></div></div>'}).join("")||'<div class="small">조건에 맞는 경비가 아직 없어.</div>';
 }
-function renderCheck(){const cv=$("packCat").value||"전체 카테고리",ov=$("packOwner").value||"전체 담당";const cats=["전체 카테고리",...new Set(s.checks.map(x=>x.cat))];$("packCat").innerHTML=cats.map(x=>'<option>'+x+'</option>').join("");$("packCat").value=cats.includes(cv)?cv:"전체 카테고리";$("packOwner").value=ov;const cat=$("packCat").value,owner=$("packOwner").value;const done=s.checks.filter(x=>x.done).length,pct=s.checks.length?Math.round(done/s.checks.length*100):0;$("packCount").textContent=done+"/"+s.checks.length;$("packBar").style.width=pct+"%";const arr=s.checks.map((x,i)=>({...x,idx:i})).filter(x=>(cat==="전체 카테고리"||x.cat===cat)&&(owner==="전체 담당"||x.owner===owner));$("checkBox").innerHTML=arr.map(x=>'<div class="pack"><div class="packline"><input type="checkbox" '+(x.done?'checked':'')+' onchange="toggleCheck('+x.idx+',this.checked)"><div style="flex:1"><div class="packname">'+x.name+'</div><div class="packmeta">'+x.cat+' · 담당 '+x.owner+'</div><div class="miniActions"><button onclick="editCheck('+x.idx+')">수정</button><button onclick="delCheck('+x.idx+')">삭제</button></div></div></div></div>').join("")}
+function renderCheck(){const cv=$("packCat").value||"전체 카테고리",ov=$("packOwner").value||"전체 담당",showOpt=$("showOptional")&&$("showOptional").checked;const visibleBase=s.checks.filter(x=>showOpt||!x.optional),cats=["전체 카테고리",...new Set(visibleBase.map(x=>x.cat))];$("packCat").innerHTML=cats.map(x=>'<option>'+x+'</option>').join("");$("packCat").value=cats.includes(cv)?cv:"전체 카테고리";$("packOwner").value=ov;const cat=$("packCat").value,owner=$("packOwner").value;const core=s.checks.filter(x=>!x.optional),done=core.filter(x=>x.done).length,pct=core.length?Math.round(done/core.length*100):0;$("packCount").textContent=done+"/"+core.length;$("packBar").style.width=pct+"%";const arr=s.checks.map((x,i)=>({...x,idx:i})).filter(x=>(showOpt||!x.optional)&&(cat==="전체 카테고리"||x.cat===cat)&&(owner==="전체 담당"||x.owner===owner));$("checkBox").innerHTML=arr.map(x=>'<div class="pack"><div class="packline"><input type="checkbox" '+(x.done?'checked':'')+' onchange="toggleCheck('+x.idx+',this.checked)"><div style="flex:1"><div class="packname">'+x.name+'</div><div class="packmeta">'+x.cat+' · 담당 '+x.owner+(x.optional?' · 선택':'')+'</div><div class="miniActions"><button onclick="editCheck('+x.idx+')">수정</button><button onclick="delCheck('+x.idx+')">삭제</button></div></div></div></div>').join("")}
 function toggleCheck(i,v){s.checks[i].done=v;save();renderCheck()}
 function addCheck(){let v=$("newCheck").value.trim();openCheckModal(-1,v)}
 function editCheck(i){openCheckModal(i,"")}
@@ -311,7 +348,7 @@ function importData(input){let file=input.files&&input.files[0];if(!file)return;
 function saveMemo(){s.memo=$("memo").value;save()}
 function saveImportant(){s.important=$("important").value;save()}
 function quickMap(q){location.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)}
-function weatherSearch(place){location.href="https://www.google.com/search?q="+encodeURIComponent(place+" weather forecast")}
+function weatherSearch(place){const urls={Bangkok:"https://www.accuweather.com/en/th/bangkok/318849/october-weather/318849",Pattaya:"https://www.accuweather.com/en/th/pattaya/1-317584_1_al/october-weather/1-317584_1_al"};location.href=urls[place]||"https://www.accuweather.com/"}
 function refreshLatest(){const u=new URL(location.href);u.searchParams.set("_refresh",Date.now());location.replace(u.toString())}
 function setDday(){const trip=new Date("2026-10-08T00:00:00+09:00"),now=new Date(),d=Math.ceil((trip-now)/(1000*60*60*24));$("dday").textContent=d>0?"✈️ D-"+d:d===0?"✈️ 출발 D-DAY":"✈️ 여행 중/완료"}
 function autoTripDay(){let now=new Date(),key=(now.getMonth()+1)+"/"+now.getDate(),i=s.days.findIndex(x=>x.d.startsWith(key+" "));if(i>=0)$("picker").value=i}

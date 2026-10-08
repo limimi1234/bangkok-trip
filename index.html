@@ -152,13 +152,7 @@ button,input,select,textarea{line-height:1.35}
 <button class="on" onclick="show('today',this)"><span>⌂</span>홈</button><button onclick="show('plan',this)"><span>▣</span>일정</button><button onclick="show('spots',this)"><span>♧</span>장소</button><button onclick="show('money',this)"><span>₩</span>경비</button><button onclick="show('check',this)"><span>✓</span>준비</button>
 </nav>
 <script>
-const base=[
-{d:"10/8 목",t:"방콕 도착",i:[["17:15","인천공항 T1","에어프레미아 YP601"],["21:10","수완나품 국제공항","도착"],["23:00","그랜드 센터 포인트 터미널 21","체크인"]]},
-{d:"10/9 금",t:"왕궁권 + 올드타운",i:[["09:00","방콕 왕궁","왕궁"],["11:00","왓 포","왓포"],["12:30","왓 아룬","왓아룬"],["15:00","탈랏노이","골목·카페"],["16:30","송왓 로드","카페·숍"],["18:30","야오와랏 로드","차이나타운 저녁"]]},
-{d:"10/10 토",t:"Young K 콘서트",i:[["10:30","그랜드 센터 포인트 터미널 21","브런치"],["12:30","반탓통 로드","식사·구경"],["15:30","삼얀 미트타운 홀","입장"],["17:00","삼얀 미트타운 홀","Young K Concert"]]},
-{d:"10/11 일",t:"요즘 방콕",i:[["10:30","아리","브런치·카페"],["14:00","그랜드 센터 포인트 터미널 21","호텔 수영"],["18:00","통로","저녁 + 바"],["21:30","에까마이","2차"]]},
-{d:"10/12 월",t:"파타야 당일치기",i:[["07:00","그랜드 센터 포인트 터미널 21","출발"],["09:30","파타야 비치","도착"],["11:00","나좀티엔","비치클럽 / 물놀이"],["16:30","파타야 비치","선셋"],["18:30","그랜드 센터 포인트 터미널 21","방콕 복귀"]]},
-{d:"10/13 화",t:"마지막 날",i:[["09:00","그랜드 센터 포인트 터미널 21","호텔 수영"],["12:00","그랜드 센터 포인트 터미널 21","체크아웃"],["13:00","센트럴월드","쇼핑"],["15:30","아속","마사지"],["19:00","수완나품 국제공항","22:45 출발"]]}];
+const base=[{"d":"10/8 목","t":"방콕 도착","i":[["17:15","인천공항 T1","에어프레미아 YP601 출발"],["21:10","수완나품 국제공항","방콕 도착 · 입국심사 및 짐 찾기"],["23:00","그랜드 센터 포인트 터미널 21","체크인 및 휴식 · 도착시간에 따라 변동"]]},{"d":"10/9 금","t":"니모섬 스노클링 투어 🐠","i":[["08:30","그랜드 센터 포인트 터미널 21","투어 호텔 픽업 예정 · 예약 확정 안내 우선"],["11:20","사매산 스피드보트 선착장","니모섬 투어 선착장 도착 · 점심 미제공"],["12:00","사매산 니모섬 스노클링","스노클링 포인트 이동 · 해상 상황에 따라 변경"],["15:00","사매산 스피드보트 선착장","선착장 복귀"],["15:30","사매산 스피드보트 선착장","샤워 및 개인 정비"],["16:00","사매산 스피드보트 선착장","방콕 복귀 차량 이동 예정"],["19:00","그랜드 센터 포인트 터미널 21","방콕 복귀 예상 · 도로 상황에 따라 변동"],["20:00","아속","컨디션 괜찮으면 저녁·마사지 (선택)"]]},{"d":"10/10 토","t":"Young K 콘서트 🎤","i":[["09:30","그랜드 센터 포인트 터미널 21","조식 및 휴식"],["11:30","반탓통 로드","점심 및 주변 구경"],["13:00","삼얀","카페·쇼핑"],["15:30","삼얀 미트타운 홀","공연 입장 일정에 맞춰 도착"],["17:00","삼얀 미트타운 홀","Young K 콘서트 · 종료시간 미확정"],["20:00","반탓통 로드","공연 종료 후 저녁 (시간 조정)"]]},{"d":"10/11 일","t":"왕궁 · 사원 · 차이나타운 🛕","i":[["08:30","그랜드 센터 포인트 터미널 21","호텔 출발"],["09:30","방콕 왕궁","복장 확인 · 입장 운영 여부 당일 확인"],["11:30","왓 포","와불상 관람"],["13:00","왕궁·올드타운","점심"],["14:30","왓 아룬","짜오프라야강 건너 사원 관람"],["16:00","송왓 로드","탈랏노이 인근 카페·골목 산책"],["18:30","야오와랏 로드","차이나타운 저녁"],["20:30","그랜드 센터 포인트 터미널 21","호텔 복귀"]]},{"d":"10/12 월","t":"쇼핑 · 카페 · 강변 야경 🛍️","i":[["10:00","그랜드 센터 포인트 터미널 21","여유로운 아침"],["11:00","센트럴월드","시암 쇼핑"],["13:00","시암","점심 · 애프터유 디저트"],["15:30","아이콘시암","쑥시암 · 쇼핑"],["18:00","아이콘시암","짜오프라야강 야경"],["19:30","아이콘시암","저녁 식사"],["21:00","그랜드 센터 포인트 터미널 21","호텔 복귀 · 마사지 선택"]]},{"d":"10/13 화","t":"수영 · 마지막 쇼핑 · 귀국 ✈️","i":[["08:30","그랜드 센터 포인트 터미널 21","조식 · 호텔 수영장"],["11:00","그랜드 센터 포인트 터미널 21","짐 정리"],["12:00","그랜드 센터 포인트 터미널 21","체크아웃 · 짐 보관 가능 여부 확인"],["12:30","터미널21 아속","점심 · 쇼핑"],["15:00","아속","마사지 · 카페 · 기념품 쇼핑"],["18:30","그랜드 센터 포인트 터미널 21","짐 수령 후 공항 이동 시작"],["22:45","수완나품 국제공항","YP602 출발 → 10/14 06:15 인천 T1 도착"]]}];
 const defaultSpots=[
 ["ICONSIAM","쇼핑","짜오프라야 강변","쑥시암·쇼핑·야경"],
 ["CentralWorld Bangkok","쇼핑","시암·칠롬","대형 쇼핑몰·맛집"],
@@ -186,6 +180,18 @@ const defaultSpots=[
 ["Pattaya Beach","물놀이","파타야","해변·선셋"]
 ].map((x,i)=>({id:"seed"+i,name:x[0],cat:x[1],area:x[2],note:x[3]}));
 let s=JSON.parse(localStorage.getItem("bkk26")||"null")||{days:base,money:[["항공권",846600,"KRW","공동"],["숙박",993390,"KRW","공동"],["Young K 티켓",7888,"THB","공동"]],checks:["여권","항공권","호텔 예약","Young K 티켓","여행자보험","eSIM/로밍","보조배터리","우산/우비","수영복","방수팩","바트 현금","해외결제 카드"].map(x=>[x,false]),memo:""};
+if(s.itineraryRevision!=="nemo-20261009"){
+  const previousDays=s.days||[];
+  s.days=base.map((day,i)=>{
+    const old=previousDays[i];
+    if(!old)return JSON.parse(JSON.stringify(day));
+    // Preserve user-created entries not in the original suggested itinerary.
+    const oldSuggested=[["인천공항 T1","수완나품 국제공항","그랜드 센터 포인트 터미널 21"],["방콕 왕궁","왓 포","왓 아룬","탈랏노이","송왓 로드","야오와랏 로드"],["그랜드 센터 포인트 터미널 21","반탓통 로드","삼얀 미트타운 홀"],["아리","그랜드 센터 포인트 터미널 21","통로","에까마이"],["그랜드 센터 포인트 터미널 21","파타야 비치","나좀티엔"],["그랜드 센터 포인트 터미널 21","센트럴월드","아속","수완나품 국제공항"]][i];
+    const extras=(old.i||[]).filter(it=>!oldSuggested.includes(it[1])&&!day.i.some(n=>n[0]===it[0]&&n[1]===it[1]));
+    return {...day,i:[...day.i,...extras].sort((a,b)=>a[0].localeCompare(b[0]))};
+  });
+  s.itineraryRevision="nemo-20261009";
+}
 if(!s.spots)s.spots=defaultSpots;
 const foodSpots=[
 {name:"Jay Fai",cat:"맛집",area:"왕궁·올드타운",note:"방콕 스트리트푸드 대표격. 대기 길 수 있고 현금 준비 추천",menu:"게살 오믈렛 · 새우 옐로커리 · 해산물 누들",source:"https://guide.michelin.com/en/bangkok-region/bangkok/restaurant/jay-fai"},
@@ -378,7 +384,7 @@ function dayHtml(di,compact=false){
  d.i.forEach((it,i)=>{if(i)x+='<div class="route"><button class="routebtn" onclick="route('+di+','+i+')">🧭 이전 장소 → 여기 길찾기</button></div>';x+='<div class="item"><div class="time">'+it[0]+'</div><div><div class="place">'+it[1]+'</div><div class="note">'+it[2]+'</div></div><div class="actions"><button class="mapOnly" onclick="map('+di+','+i+')">🗺 지도</button>'+(compact?'':'<details class="itemMore"><summary>•••</summary><div class="moreMenu"><button onclick="editPlan('+di+','+i+')">수정</button><button onclick="mv('+di+','+i+',-1)">↑</button><button onclick="mv('+di+','+i+',1)">↓</button><button class="danger" onclick="delPlan('+di+','+i+')">삭제</button></div></details>')+'</div></div>';});return x+'</div>'
 }
 function route(d,i){if(i>0)directions(s.days[d].i[i-1][1],s.days[d].i[i][1])}
-function renderToday(){let di=+$("picker").value,d=s.days[di];$("todayBox").innerHTML=dayHtml(di,true);$("todayTitle").textContent=d.d+" · "+d.t;const focus=["✈️ 17:15 출발 · 여권과 탑승정보 마지막 확인","🛕 왕궁 · 왓 포 · 왓 아룬 가는 날","🎤 Young K 콘서트 · 15:30 입장","☕ 아리 · 수영 · 통로에서 여유 있게","🌊 파타야 물놀이 · 날씨 먼저 확인","🧳 12:00 체크아웃 · YP602 22:45 출발"];$("todayFocus").textContent=focus[di]||"오늘 일정 확인";renderCritical();renderDayTabs()}
+function renderToday(){let di=+$("picker").value,d=s.days[di];$("todayBox").innerHTML=dayHtml(di,true);$("todayTitle").textContent=d.d+" · "+d.t;const focus=["✈️ 17:15 출발 · 여권과 탑승정보 마지막 확인","🐠 니모섬 스노클링 · 08:30 호텔 픽업","🎤 Young K 콘서트 · 15:30 입장","🛕 왕궁 · 왓 포 · 왓 아룬 · 차이나타운","🛍️ 시암 · 아이콘시암 · 강변 야경","🧳 12:00 체크아웃 · YP602 22:45 출발"];$("todayFocus").textContent=focus[di]||"오늘 일정 확인";renderCritical();renderDayTabs()}
 function renderPlan(){let di=+$("picker").value;$("planBox").innerHTML=dayHtml(di);renderDayTabs()}
 function refresh(){renderToday();renderPlan()}
 function mv(d,i,n){let a=s.days[d].i,j=i+n;if(j<0||j>=a.length)return;[a[i],a[j]]=[a[j],a[i]];save();refresh()}

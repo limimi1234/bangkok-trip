@@ -116,6 +116,41 @@ button,input,select,textarea{line-height:1.35}
 .expenseForm .field{min-width:0}.expenseDate input[type="date"]{display:block;width:100%;min-width:0;max-width:100%;height:46px;padding:10px 12px;font-size:16px;line-height:1.2;-webkit-appearance:none;appearance:none;background:#fff}
 .expenseDate input[type="date"]::-webkit-date-and-time-value{text-align:left}
 @media(max-width:390px){.coverRefresh{padding:0 10px;font-size:11px}.coverActions{right:12px;top:11px}}
+
+/* Clearer mobile itinerary visual refresh */
+:root{--bg:#f4f7f5;--ink:#1b3027;--muted:#61746b;--line:#e5ece7}
+body{background:#f4f7f5;color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+header{background:#fff;padding:14px 18px}header h1{font-size:19px;letter-spacing:-.5px}
+main{max-width:660px;padding:0 14px 24px}
+.tripCover{margin:0 -14px 16px;min-height:200px;padding:24px 20px 20px;background:linear-gradient(135deg,#153d34,#22795b 68%,#6d9c7a);border-radius:0 0 30px 30px}
+.tripCover .coverTitle{font-size:32px;line-height:1.16;letter-spacing:-1.2px}
+.focusCard{border-radius:18px;padding:16px 44px 16px 16px}
+.card{border:1px solid #e9efeb;box-shadow:0 5px 20px rgba(17,56,40,.035);border-radius:20px;padding:17px}
+.sectionTitle{margin:21px 2px 11px}.sectionTitle b{font-size:19px;letter-spacing:-.4px}
+.daytabs{padding:8px 1px 13px;gap:8px;background:#f4f7f5}
+.daytab{flex-basis:64px;min-height:62px;border:1px solid #e8eee9;box-shadow:none}
+.daytab.on{background:#17664c;border-color:#17664c;box-shadow:0 5px 12px rgba(23,102,76,.16)}
+.daycard{padding:17px}.dayhead{margin:-17px -17px 6px;padding:18px 17px 12px}.dayhead .day{font-size:22px}
+.item{grid-template-columns:56px minmax(0,1fr);column-gap:8px;padding:17px 0 17px 2px}
+.item:before{left:57px;top:22px;width:8px;height:8px;background:#27815f;box-shadow:0 0 0 3px #e7f4ec;border:1px solid #fff}
+.item:after{left:56.5px;top:33px;border-color:#cdded3}
+.item>div:nth-child(2){padding-left:13px}
+.time{font-size:13px;color:#17664c;font-variant-numeric:tabular-nums;letter-spacing:-.2px}
+.place{font-size:16px;line-height:1.4;letter-spacing:-.35px;color:#1c3027}
+.note{font-size:13px;line-height:1.65;color:#61746b;margin-top:6px;word-break:keep-all}
+.route{margin:2px 0 2px 74px;padding:7px 10px;background:#eef5f0;border-radius:10px}
+.routebtn{color:#386c55;font-size:12px;line-height:1.45}
+.actions{margin-left:13px;gap:8px;margin-top:11px}
+.actions .mapOnly{background:#eaf4ed;color:#17664c;border-radius:10px;font-size:12px;min-height:40px}
+.itemMore summary{background:#f2f5f3;min-height:40px;display:flex;align-items:center;justify-content:center}
+.addbtn{background:#e8f4ec;color:#17664c;border-radius:11px;padding:10px 13px}
+.homeTools button,.homeInfo>div{border:1px solid #e8eee9;box-shadow:none}
+.spot{border:1px solid #e8eee9;box-shadow:0 3px 12px rgba(17,56,40,.03)}
+.spotname{font-size:16px;letter-spacing:-.25px}
+.bottom{background:rgba(255,255,255,.98);box-shadow:0 -5px 20px rgba(25,60,45,.07);padding-bottom:calc(7px + env(safe-area-inset-bottom))}
+.bottom button{min-height:56px;color:#64736b}.bottom button.on{background:#eaf4ed;color:#17664c}
+button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #2a8c64;outline-offset:2px}
+@media(max-width:390px){main{padding-left:10px;padding-right:10px}.tripCover{margin-left:-10px;margin-right:-10px}.item{grid-template-columns:51px minmax(0,1fr);gap:5px}.item:before{left:51px}.item:after{left:50.5px}.item>div:nth-child(2){padding-left:11px}.route{margin-left:64px}.place{font-size:15px}.note{font-size:12.5px}.daytab{flex-basis:58px}}
 </style></head><body>
 <header><h1>🇹🇭 예림 × 나배 · Bangkok 2026</h1><div class="sub">10/8–10/13 · 2명 · Grande Centre Point Terminal 21</div><span class="pill" id="dday">✈️ 방콕</span><span class="pill">🎤 10/10 Young K</span><span class="pill">🌊 10/12 Pattaya</span></header>
 <main>

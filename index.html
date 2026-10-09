@@ -436,7 +436,7 @@ s.money=(s.money||[]).map(m=>Array.isArray(m)?{name:m[0],amount:Number(m[1])||0,
 
 
 const $=x=>document.getElementById(x),save=()=>localStorage.setItem("bkk26",JSON.stringify(s));save();
-function show(id,b){document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));$(id).classList.add("on");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("on"));if(b)b.classList.add("on");if(id==="spots")renderSpots();if(id==="plan")renderPlan();if(id==="money")renderMoney();if(id==="check")renderCheck()}
+function show(id,b){document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));$(id).classList.add("on");document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("on"));if(b)b.classList.add("on");if(id==="spots")renderSpots();if(id==="plan")renderPlan();if(id==="money")renderMoney();if(id==="check"){}}
 function openTab(id){let btn=[...document.querySelectorAll(".bottom button")].find(x=>(x.getAttribute("onclick")||"").includes("'"+id+"'"));show(id,btn||null);window.scrollTo({top:0,behavior:"smooth"})}
 function dayTabsHtml(di){return s.days.map((d,i)=>'<button class="daytab '+(i===di?'on':'')+'" onclick="selectTripDay('+i+')"><small>'+d.d.split(" ")[1]+'</small><b>'+d.d.split(" ")[0]+'</b></button>').join("")}
 function renderDayTabs(){let di=+$("picker").value;["dayTabsHome","dayTabsPlan"].forEach(id=>{let el=$(id);if(el)el.innerHTML=dayTabsHtml(di)})}
